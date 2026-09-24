@@ -28,7 +28,7 @@ A motorized pooper-scooper for our client, who uses a wheelchair and has limited
 
 **Code.** `firmware/combined_code_v3.ino` runs on the final device. Two buttons step the servo open/closed, two drive the actuator out/in.
 
-<details>
+<details open>
 <summary><b>View <code>combined_code_v3.ino</code></b></summary>
 
 ```cpp
