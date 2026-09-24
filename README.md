@@ -28,6 +28,76 @@ A motorized pooper-scooper for our client, who uses a wheelchair and has limited
 
 **Code.** `firmware/combined_code_v3.ino` runs on the final device. Two buttons step the servo open/closed, two drive the actuator out/in.
 
+<details>
+<summary><b>View <code>combined_code_v3.ino</code></b></summary>
+
+```cpp
+//servo
+#include <Servo.h>
+Servo myservo;
+int pos = 50;
+int but24 = A4;
+int but28 = 30;
+int s_control = 13;
+
+//linear actuator
+int in3 = 5;
+int in4 = 6;
+int but7 = A0;
+int but19 = A2;
+
+void setup() {
+  //servo
+  myservo.attach(s_control);  
+  pinMode(but24, INPUT_PULLDOWN);
+  pinMode(but28, INPUT_PULLDOWN);
+  Serial.begin(9600);
+
+  //lin act
+  pinMode(in3, OUTPUT);
+  pinMode(in4, OUTPUT);
+
+  pinMode(but7, INPUT_PULLDOWN);
+  pinMode(but19, INPUT_PULLDOWN);
+
+}
+
+void loop() {
+  //servo
+   if (digitalRead(but24) && pos > 15) {
+      myservo.write(pos);
+      pos -= 5;
+      delay(25);
+    }
+
+   else if (digitalRead(but28) && pos < 80) {
+      myservo.write(pos);
+      pos += 5;
+      delay(25);
+    }
+    Serial.println(pos);
+
+
+  //lin act
+  if (digitalRead(but7)) {
+    digitalWrite(in3, LOW);
+    digitalWrite(in4, HIGH);
+  }
+
+  else if (digitalRead(but19)) {
+    digitalWrite(in3, HIGH);
+    digitalWrite(in4, LOW);
+  }
+
+  else {
+    digitalWrite(in3, LOW);
+    digitalWrite(in4, LOW);
+  }
+}
+```
+
+</details>
+
 ## Result
 
 Picked up multiple crumpled pieces of paper from a seated position and dropped them into a plastic bag. Grip strength was sufficient to hold two phones and the arm extension worked without difficulty.
